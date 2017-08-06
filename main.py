@@ -4,7 +4,7 @@ from sys import argv
 import sqlite3
 
 class BaseClass:
-    def __init__(self, db_name, table_name, path=None):
+    def __init__(self, db_name, table_name):
         """コンストラクタ
         db_name  -- データベース名
         table_name -- データベースのテーブル名
@@ -15,8 +15,9 @@ class BaseClass:
         self.db_name = db_name
         self.table_name = table_name
         # パスの指定がなければカレントディレクトリを取得
-        database_path = path if path is not None else os.path.dirname(os.path.abspath(__file__))
-        self.connector = sqlite3.connect(database_path + '/' + self.db_name)
+        db_path = "{0}/DB/{1}"
+        self.connector = sqlite3.connect(db_path.format(
+            os.path.dirname(os.path.abspath(__file__)), self.db_name))
         self.cursor = self.connector.cursor()
 
 
